@@ -38,6 +38,8 @@ dependencies:
   flutter_screenutil: 5.9.0
   google_fonts: 6.1.0
   auto_size_text: 3.0.0
+  flutter_tabler_icons: ^1.7.0
+  async_button_builder: ^3.0.0+1
 
 dev_dependencies:
   flutter_test:

@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:lablogfrontend/widgets/CustomDrawer.dart';
 import 'package:lablogfrontend/widgets/Header.dart';
 
 class MainPageViewer extends StatelessWidget {
-  final bool MobileSize;
-  const MainPageViewer({super.key, required this.MobileSize});
-
+  const MainPageViewer({super.key});
   @override
   Widget build(BuildContext context) {
-    return MobileSize
-        ? const MainPageViewerMobileLayout()
-        : const MainPageViewerPCLayout();
+    return MainPageViewerPCLayout();
   }
 }
 
 class MainPageViewerPCLayout extends StatefulWidget {
-  const MainPageViewerPCLayout({super.key});
-
+  MainPageViewerPCLayout({super.key});
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   State<MainPageViewerPCLayout> createState() => _MainPageViewerPCLayoutState();
 }
@@ -25,31 +23,34 @@ class _MainPageViewerPCLayoutState extends State<MainPageViewerPCLayout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: widget._scaffoldKey,
         drawer: CustomDrawer(),
-        body: Container(
-          child: Column(children: [
-            Expanded(flex: 1, child: Header()),
-            Expanded(
-                flex: 15,
-                child: Container(
-                    color: Colors.blue, child: Center(child: Text('Content')))),
-          ]),
+        body: Stack(
+          children: [
+            Container(
+              child: Column(children: [
+                Container(
+                  height: 100.h,
+                  child: Header(),
+                ),
+                Expanded(
+                  child: Container(
+                      color: Colors.blue,
+                      child: const Center(child: Text('Content'))),
+                )
+              ]),
+            ),
+            Positioned(
+                top: 20.h,
+                left: 20.w,
+                child: IconButton(
+                  onPressed: () {
+                    widget._scaffoldKey.currentState!.openDrawer();
+                  },
+                  icon: const Icon(TablerIcons.menu_2),
+                  iconSize: 35.h,
+                ))
+          ],
         ));
-  }
-}
-
-class MainPageViewerMobileLayout extends StatefulWidget {
-  const MainPageViewerMobileLayout({super.key});
-
-  @override
-  State<MainPageViewerMobileLayout> createState() =>
-      _MainPageViewerMobileLayoutState();
-}
-
-class _MainPageViewerMobileLayoutState
-    extends State<MainPageViewerMobileLayout> {
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
   }
 }

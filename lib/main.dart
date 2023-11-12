@@ -14,20 +14,14 @@ class MainEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size EntryScreenSize = new Size(
-        MediaQuery.of(context).size.width, MediaQuery.of(context).size.height);
-
-    bool MobileSize = false;
-    if (EntryScreenSize.height > EntryScreenSize.width)
-      MobileSize = true;
-    else
-      MobileSize = false;
+    ScreenUtil.init(
+      context,
+      designSize: TargetScreenRes,
+      minTextAdapt: false,
+    );
     return MaterialApp(
       title: 'LABlog',
-      //theme: ThemeData(fontFamily: 'SourceCodePro'),
-      home: MainPageViewer(
-        MobileSize: MobileSize,
-      ),
+      home: MainPageViewer(),
     );
   }
 }
