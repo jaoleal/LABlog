@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
+import 'package:lablogfrontend/Content/InterLangTexts.dart';
 import 'package:lablogfrontend/widgets/CustomDrawer.dart';
 import 'package:lablogfrontend/widgets/Header.dart';
 
@@ -14,7 +14,7 @@ class MainPageViewer extends StatelessWidget {
 
 class MainPageViewerPCLayout extends StatefulWidget {
   MainPageViewerPCLayout({super.key});
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   State<MainPageViewerPCLayout> createState() => _MainPageViewerPCLayoutState();
 }
@@ -22,35 +22,45 @@ class MainPageViewerPCLayout extends StatefulWidget {
 class _MainPageViewerPCLayoutState extends State<MainPageViewerPCLayout> {
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
     return Scaffold(
-        key: widget._scaffoldKey,
-        drawer: CustomDrawer(),
-        body: Stack(
-          children: [
-            Container(
-              child: Column(children: [
-                Container(
-                  height: 100.h,
-                  child: Header(),
-                ),
-                Expanded(
-                  child: Container(
-                      color: Colors.blue,
-                      child: const Center(child: Text('Content'))),
-                )
-              ]),
+      key: _scaffoldKey,
+      drawer: const CustomDrawer(),
+      body: SizedBox(
+        child: Column(children: [
+          SizedBox(
+            height: 100.h,
+            child: Header(
+              scaffoldKey: _scaffoldKey,
             ),
-            Positioned(
-                top: 20.h,
-                left: 20.w,
-                child: IconButton(
-                  onPressed: () {
-                    widget._scaffoldKey.currentState!.openDrawer();
-                  },
-                  icon: const Icon(TablerIcons.menu_2),
-                  iconSize: 35.h,
-                ))
-          ],
-        ));
+          ),
+          SizedBox(
+            height: 40.h,
+          ),
+          Container(
+            height: 700.h,
+            decoration: BoxDecoration(color: Colors.white.withAlpha(20)),
+            padding: EdgeInsets.symmetric(vertical: 100.h),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(textHolder["Introdução"]!.ptBr.text),
+                  Text(textHolder["Texto do Beta"]!.ptBr.text)
+                ],
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 55.h),
+            child: Text(
+              textHolder["Contato"]!.ptBr.text,
+              style: TextStyle(fontSize: 30.h),
+            ),
+          )
+        ]),
+      ),
+    );
   }
 }
